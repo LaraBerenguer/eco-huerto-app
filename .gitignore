@@ -1,0 +1,6 @@
+# .gitignore
+/bin/
+/obj/
+*.exe
+*.test
+.env
