@@ -27,10 +27,10 @@ func (myApp *Config) getClimaText() (*canvas.Text, *canvas.Text, *canvas.Text, *
 		}
 
 		//Preparar strings
-		precipitacionTtx := fmt.Sprintln("Precipitación: %d%%", prediccion.ProbPrecipitacio)
-		tempMaxTxt := fmt.Sprintln("Temp. Máxima: %d", prediccion.TemperaturaMax)
-		tempMinTxt := fmt.Sprintln("Temp. Mínima: %d", prediccion.TemperaturaMin)
-		humedadTxt := fmt.Sprintln("Humedad Relativa: %d%%", prediccion.HumitatRelativa)
+		precipitacionTtx := fmt.Sprintf("Precipitación: %d%%", prediccion.ProbPrecipitacio)
+		tempMaxTxt := fmt.Sprintf("Temp. Máxima: %d", prediccion.TemperaturaMax)
+		tempMinTxt := fmt.Sprintf("Temp. Mínima: %d", prediccion.TemperaturaMin)
+		humedadTxt := fmt.Sprintf("Humedad Relativa: %d%%", prediccion.HumitatRelativa)
 
 		//crear elementos de texto
 		precipitacio = canvas.NewText(precipitacionTtx, colorTexte)

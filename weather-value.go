@@ -97,7 +97,7 @@ func (d *Diaria) getPredictions() (*Diaria, error) {
 }
 
 func getFirstUrl() (string, error) {
-	url := os.Getenv("AEMET_URL")
+	url := os.Getenv("AEMET_URL") // $ env : AEMET_URL="url entera"
 	request, _ := http.NewRequest("GET", url, nil)
 
 	//header para aemet
@@ -155,7 +155,7 @@ func readObjects(url string) (*Diaria, error) {
 
 	precipitacion = prediction[0].Prediccion.Dia[0].ProbPrecipitacion[0].Value
 	tempMax = prediction[0].Prediccion.Dia[0].Temperatura.Maxima
-	tempMax = prediction[0].Prediccion.Dia[0].Temperatura.Minima
+	tempMin = prediction[0].Prediccion.Dia[0].Temperatura.Minima
 	humedad = prediction[0].Prediccion.Dia[0].HumedadRelativa.Maxima
 
 	var dadesParte = Diaria{
