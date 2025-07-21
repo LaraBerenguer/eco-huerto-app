@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"errors"
 	"time"
 )
 
@@ -82,6 +83,8 @@ func (repo *SQLiteRepository) LeerRegistros() ([]Registros, error) {
 func (repo *SQLiteRepository) LeerRegistro(id int64) (*Registros, error) {
 	stmt := "select id,data_registre,precipitacio,temp_maxima,temp_minima,humitat from registres where id = ? order by id desc limit 1"
 	filera := repo.Conn.QueryRow(stmt, id) //para cuando solo esperamos una linea de resultados (un resultado)
+	//aquí no hay control de error sobre filera porque solo devuelve una variable, no error. El error se controla abajo,
+	//en Scan, donde si filera no ha devuelto nada se guardará el error
 
 	var fila Registros
 	var temps int64
@@ -101,4 +104,27 @@ func (repo *SQLiteRepository) LeerRegistro(id int64) (*Registros, error) {
 
 	fila.Data = time.Unix(temps, 0)
 	return &fila, nil
+}
+
+func (repo *SQLiteRepository) ActualizarRegistro(id int64, actualizar Registros) error {
+	if id == 0 {
+		return errors.New("El ID recibido es incorrecto")
+	}
+
+	sentencia := "update registres set data_registre = ?, precipitacio = ?, temp_maxima = ?, temp_minima = ?, humedad = ? where id = ?"
+	res, err := repo.Conn.Exec(sentencia, actualizar.Data.Unix(), actualizar.Precipitacio, actualizar.TempMaxima, actualizar.TempMinima, actualizar.Humitat)
+	if err != nil {
+		return err
+	}
+
+	numFiles, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if numFiles == 0 {
+		return errorActualizantDades
+	}
+
+	return nil
 }
