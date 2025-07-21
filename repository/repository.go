@@ -15,7 +15,7 @@ type Repositoty interface {
 	InsertarRegistro(nuevoRegistro Registros) (*Registros, error)
 	LeerRegistro(id int64) (*Registros, error)
 	LeerRegistros() ([]Registros, error)
-	ActualizarRegistro(id int64, actualizar *Registros) error
+	ActualizarRegistro(id int64, actualizar Registros) error
 	BorrarRegistro(id int64) error
 }
 
