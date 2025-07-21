@@ -128,3 +128,26 @@ func (repo *SQLiteRepository) ActualizarRegistro(id int64, actualizar Registros)
 
 	return nil
 }
+
+func (repo *SQLiteRepository) BorrarRegistro(id int64) error {
+	if id == 0 {
+		return errors.New("El ID recibido es incorrecto")
+	}
+
+	stmt := "delete from registres where id = ?"
+	res, err := repo.Conn.Exec(stmt, id)
+	if err != nil {
+		return err
+	}
+
+	numFiles, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if numFiles == 0 {
+		return errorBorrantDades
+	}
+
+	return nil
+}
