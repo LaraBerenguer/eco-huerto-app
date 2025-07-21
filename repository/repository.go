@@ -10,7 +10,7 @@ var (
 	errorBorrantDades     = errors.New("error borrando datos")
 )
 
-type Repositoty interface {
+type Repository interface {
 	Migrate() error
 	InsertarRegistro(nuevoRegistro Registros) (*Registros, error)
 	LeerRegistro(id int64) (*Registros, error)
