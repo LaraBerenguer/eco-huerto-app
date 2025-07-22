@@ -9,19 +9,26 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	_ "fyne.io/fyne/v2/widget"
+	"fyne.io/fyne/v2/widget"
 	_ "github.com/glebarez/go-sqlite"
 )
 
 type Config struct {
-	App                    fyne.App              //base para construir la GUI (visual)
-	InfoLog                *log.Logger           //log de acciones del usuario
-	ErrorLog               *log.Logger           //log de errores
-	DB                     repository.Repository //puntero de conexión a la db
-	MainWindow             fyne.Window           //ventana principal con fyne
-	ClimaDadesContainer    *fyne.Container       //almacenar contenedor de los datos aemet
-	HTTPClient             http.Client           //definir carga de la librería http
-	ForecastGraphContainer *fyne.Container       //contenedor para guardar el gráfico
+	App                                       fyne.App              //base para construir la GUI (visual)
+	InfoLog                                   *log.Logger           //log de acciones del usuario
+	ErrorLog                                  *log.Logger           //log de errores
+	DB                                        repository.Repository //puntero de conexión a la db
+	MainWindow                                fyne.Window           //ventana principal con fyne
+	ClimaDadesContainer                       *fyne.Container       //almacenar contenedor de los datos aemet
+	HTTPClient                                http.Client           //definir carga de la librería http
+	ForecastGraphContainer                    *fyne.Container       //contenedor para guardar el gráfico
+	RegistresTable                            *widget.Table         //tabla para guardar datos de db
+	Registres                                 [][]interface{}       //guardar slice de slice obtenido de la db
+	AddRegistresDataRegistresEntrada          *widget.Entry         //guardar campo data del formulario
+	AddRegistresPrecipitacionRegistresEntrada *widget.Entry         //guardar campo precipitación del formulario
+	AddRegistresTempMaximaRegistresEntrada    *widget.Entry         //guardar campo temp max del formulario
+	AddRegistresTempMinimaRegistresEntrada    *widget.Entry         //guardar campo temp min del formulario
+	AddRegistresHumedadRegistresEntrada       *widget.Entry         //guardar campo humedad del formulario
 }
 
 var myApp Config

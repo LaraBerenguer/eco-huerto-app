@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
 )
@@ -27,18 +26,21 @@ func (myApp *Config) makeUI() {
 	toolbar := myApp.getToolbar(myApp.MainWindow)
 
 	//grafico primera pestaña
-	contenidorPrimeraTab := myApp.forecastTab()
+	contenidorForecastTab := myApp.forecastTab()
+
+	//contenido segunda pestaña
+	contenidorRegistresTab := myApp.registresTab()
 
 	//pestañas
 	tabs := container.NewAppTabs(
-		container.NewTabItemWithIcon("Previsión", theme.HomeIcon(), canvas.NewText("Texto de ejemplo", nil)),
-		container.NewTabItemWithIcon("Parte Meteorológico", theme.ComputerIcon(), canvas.NewText("Otro texto de ejemplo", nil)),
+		container.NewTabItemWithIcon("Previsión", theme.HomeIcon(), contenidorForecastTab),
+		container.NewTabItemWithIcon("Parte Meteorológico", theme.InfoIcon(), contenidorRegistresTab),
 	)
 
 	tabs.SetTabLocation(container.TabLocationTop)
 
 	//situar el contenedor en la ventana
-	verticalContainer := container.NewVBox(contenidorClima, toolbar, tabs, contenidorPrimeraTab)
+	verticalContainer := container.NewVBox(contenidorClima, toolbar, tabs)
 	myApp.MainWindow.SetContent(verticalContainer)
 
 	//crear go rutine
@@ -58,4 +60,9 @@ func (myApp *Config) actualitzarClimadadesContent() {
 	image := myApp.getImg()
 	myApp.ForecastGraphContainer.Objects = []fyne.CanvasObject{image}
 	myApp.ForecastGraphContainer.Refresh()
+}
+
+func (myApp *Config) actualitzarRegistresTab() {
+	myApp.Registres = myApp.getRegistresSlice()
+	myApp.RegistresTable.Refresh()
 }
